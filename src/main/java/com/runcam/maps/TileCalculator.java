@@ -20,7 +20,7 @@ public class TileCalculator {
     public static void main(String[] args) {
         long totalTiles = 0;
 
-        for (int zoom = 3; zoom <= 20; zoom++) {
+        for (int zoom = 3; zoom <= 13; zoom++) {
             int x1 = lon2tileX(EAST, zoom);
             int y1 = lat2tileY(NORTH, zoom);
             int x2 = lon2tileX(WEST, zoom);
