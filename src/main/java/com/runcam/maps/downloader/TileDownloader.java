@@ -125,18 +125,18 @@ public class TileDownloader {
                         int current = currentInZoom.incrementAndGet();
                         long totalDownloaded = downloadedTiles.incrementAndGet();
 
-                        // 显示进度
-                        int remaining = totalInZoom - finalAlreadyDownloaded;
-                        if (current % 100 == 0 || current == remaining) {
-                            double percent = (double) current / remaining * 100;
-                            System.out.printf("缩放等级 %d: %d/%d (%.1f%%)%n",
-                                    tileZ, current, remaining, percent);
-                        }
-
-                        if (totalDownloaded % 1000 == 0) {
-                            double overallPercent = (double) totalDownloaded / totalTiles.get() * 100;
-                            System.out.printf("总进度: %d/%d (%.1f%%)%n",
-                                    totalDownloaded, totalTiles.get(), overallPercent);
+                        // 显示进度（只显示当前需要下载的文件进度）
+                        int needDownload = totalInZoom - finalAlreadyDownloaded;
+                        if (needDownload > 0) {
+                            double percent = (double) current / needDownload * 100;
+                            if (current % 100 == 0 || current == needDownload) {
+                                System.out.printf("缩放等级 %d: %d/%d (%.1f%%)%n",
+                                        tileZ, current, needDownload, percent);
+                                
+                                if (current == needDownload) {
+                                    System.out.printf("缩放等级 %d 完成!%n", tileZ);
+                                }
+                            }
                         }
                     } catch (Exception e) {
                         logger.warn("下载失败 {}/{}/{}: {}", tileX, tileY, tileZ, e.getMessage());
