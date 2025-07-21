@@ -77,7 +77,6 @@ public class TileDownloader {
         int maxY = TileCoordinateUtils.lat2tileY(bounds.getSouth(), zoom);
 
         // 检查已下载的文件数量
-        ProgressTracker tracker = new ProgressTracker(outputDirectory);
         int alreadyDownloaded = 0;
         int totalInZoom = (maxX - minX + 1) * (maxY - minY + 1);
 
@@ -100,8 +99,7 @@ public class TileDownloader {
             return;
         }
 
-        long tilesInZoom = totalInZoom;
-        totalTiles.addAndGet(tilesInZoom);
+        totalTiles.addAndGet(totalInZoom);
         downloadedTiles.addAndGet(alreadyDownloaded);
 
         CountDownLatch latch = new CountDownLatch(totalInZoom - alreadyDownloaded);
@@ -123,7 +121,6 @@ public class TileDownloader {
                     try {
                         downloadTile(tileX, tileY, tileZ);
                         int current = currentInZoom.incrementAndGet();
-                        long totalDownloaded = downloadedTiles.incrementAndGet();
 
                         // 显示进度（只显示当前需要下载的文件进度）
                         int needDownload = totalInZoom - finalAlreadyDownloaded;
@@ -203,14 +200,6 @@ public class TileDownloader {
         }
     }
 
-    public double getProgress() {
-        return totalTiles.get() > 0 ? (double) downloadedTiles.get() / totalTiles.get() : 0;
-    }
-
-    public long getTotalTiles() {
-        return totalTiles.get();
-    }
-
     public long getDownloadedTiles() {
         return downloadedTiles.get();
     }
@@ -218,4 +207,5 @@ public class TileDownloader {
     public long getFailedTiles() {
         return failedTiles.get();
     }
+
 }

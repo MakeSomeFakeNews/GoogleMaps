@@ -12,16 +12,7 @@ public class TileCoordinateUtils {
             * Math.pow(2, zoom)
         );
     }
-    
-    public static double tileX2lon(int x, int zoom) {
-        return x / Math.pow(2, zoom) * 360 - 180;
-    }
-    
-    public static double tileY2lat(int y, int zoom) {
-        double n = Math.PI - 2 * Math.PI * y / Math.pow(2, zoom);
-        return Math.toDegrees(Math.atan(Math.sinh(n)));
-    }
-    
+
     public static int getTileCountInChina(int zoom) {
         ChinaBounds bounds = new ChinaBounds();
         int minX = lon2tileX(bounds.getWest(), zoom);

@@ -5,7 +5,7 @@ public class DownloadConfig {
     private int minZoom = 1;
     private int maxZoom = 12;
     private int maxConcurrentDownloads = 10;
-    private int timeoutSeconds = 30;
+    private final int timeoutSeconds = 30;
     
     public DownloadConfig() {}
     
@@ -44,11 +44,7 @@ public class DownloadConfig {
     public int getTimeoutSeconds() {
         return timeoutSeconds;
     }
-    
-    public void setTimeoutSeconds(int timeoutSeconds) {
-        this.timeoutSeconds = timeoutSeconds;
-    }
-    
+
     @Override
     public String toString() {
         return "DownloadConfig{" +

@@ -32,20 +32,7 @@ public class ProgressTracker {
     public boolean isDownloaded(int x, int y, int z) {
         return downloadedTiles.contains(getTileKey(x, y, z));
     }
-    
-    public void markDownloaded(int x, int y, int z) {
-        String key = getTileKey(x, y, z);
-        downloadedTiles.add(key);
-        
-        try {
-            Files.write(Paths.get(progressFile), (key + "\n").getBytes(), 
-                       java.nio.file.StandardOpenOption.CREATE, 
-                       java.nio.file.StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            System.err.println("Warning: Could not save progress: " + e.getMessage());
-        }
-    }
-    
+
     private String getTileKey(int x, int y, int z) {
         return z + "/" + x + "/" + y;
     }
